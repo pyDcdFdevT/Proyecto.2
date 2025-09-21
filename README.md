@@ -8,7 +8,7 @@ Aquí estoy aprendiendo conceptos básicos de programación y control de version
 ## 📂 Archivos principales  
 
 - `hola.py` → Primer **"Hola, mundo"** 👋  
-- `hellogit.py`, `hellogit3.py` → Archivos de práctica con **Git** 🔧  
+- `hellogit.py`, `ejercicios-git-dia-2.py` → Archivos de práctica con **Git** 🔧  
 - `repasodia3.py` → Ejercicios de repaso en **Python** ✍️  
 - `mini-calculadora-dia3.py` → Una pequeña **calculadora** con operaciones básicas ➕➖✖️➗  
 
