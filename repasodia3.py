@@ -22,3 +22,6 @@ print(numero_entero, saludo_texto, es_verdad)
 # Usando el caracter de salto de línea '\n'
 print("\nEjemplo 3:")
 print(f"Número: {numero_entero}\nSaludo: {saludo_texto}\nVerdad: {es_verdad}")
+
+
+
