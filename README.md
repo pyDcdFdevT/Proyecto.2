@@ -12,6 +12,7 @@ Aquí estoy aprendiendo conceptos básicos de programación y control de version
 - `repasodia3.py` → Ejercicios de repaso en **Python** ✍️  
 - `mini-calculadora-dia3.py` → Una pequeña **calculadora** con operaciones básicas ➕➖✖️➗
 - `cuentas atras.py` → Un script de Python para practicar **bucles** y la función `print()` ⏰ (Fué hecho todo el proceso desde Termux en un teléfono Samsung Galaxy s24 Ultra) 📱
+- `calculadora-compleja-dia4.py` → El script de la calculadora interactiva, que incluye operaciones básicas y funciones trigonométricas (seno y coseno), demostrando el uso de la lógica condicional (if/elif) para crear un programa más interactivo.🧮
 
 ---
 
