@@ -10,7 +10,8 @@ Aquí estoy aprendiendo conceptos básicos de programación y control de version
 - `hola.py` → Primer **"Hola, mundo"** 👋  
 - `hellogit.py`, `ejercicios-git-dia-2.py` → Archivos de práctica con **Git** 🔧  
 - `repasodia3.py` → Ejercicios de repaso en **Python** ✍️  
-- `mini-calculadora-dia3.py` → Una pequeña **calculadora** con operaciones básicas ➕➖✖️➗  
+- `mini-calculadora-dia3.py` → Una pequeña **calculadora** con operaciones básicas ➕➖✖️➗
+- - `cuentas atras.py` → Un script de Python para practicar **bucles** y la función `print()` ⏰ (Fué hecho todo el proceso desde Termux en un teléfono Samsung Galaxy s24 Ultra) 📱
 
 ---
 
