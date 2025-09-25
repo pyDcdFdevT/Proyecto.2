@@ -22,6 +22,4 @@ print(type((print(my_string_variable, my_int_to_str_variable, my_bool_variable))
 print(len(my_string_variable))
 
 
-print(3)
-
 
