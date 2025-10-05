@@ -6,7 +6,3 @@ empleados = {
 for clave in empleados:
     empleados[clave] = empleados[clave] * 1.05
 print(empleados)
-    
-    
-    
-    

@@ -29,17 +29,10 @@ promedios_regionales = {region: sum(ventas) / len(ventas) for region,
 ventas in ventas_regionales.items()} #4)PROMEDIOS REGIONALES
 
 dashboard = {
-    "venta_media_global": [venta_media_global],
-    "venta_maxima_global": [venta_maxima_global],
-    "moda_sur": [moda_sur],
-    "promedios_regionales": [promedios_regionales]
+    "venta_media_global": venta_media_global,
+    "venta_maxima_global": venta_maxima_global,
+    "moda_sur": moda_sur,
+    "promedios_regionales": promedios_regionales
 }
+
 print(dashboard)
-
-
-
-    
-
-
-
-
