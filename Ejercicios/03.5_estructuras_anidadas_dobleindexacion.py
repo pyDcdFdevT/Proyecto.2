@@ -1,3 +1,5 @@
+#EXTRAER EL SUELDO DE LUIS Y EL PAÍS DE MARTA
+
 clientes = {
     "Ana": ["España", 1250],
     "Luis": ["México", 800],
