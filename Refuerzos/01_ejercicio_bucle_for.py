@@ -1,9 +1,7 @@
 # 1. Crea un bucle 'for' que itere sobre los ÍNDICES (0, 1, 2...)
 # de la lista 'precios'.
 #    Pista: ¿Qué combinación de funciones te da los índices de la lista?
-
 # 2. Dentro del bucle, usa el índice para acceder al elemento actual.
-
 # 3. MODIFICA el valor original en ese índice, aumentándolo en un 10% 
 # (multiplica por 1.10).
 #    Fórmula: precios[i] = precios[i] * 1.10
@@ -19,19 +17,7 @@ print(precios)
 
 # Lista de precios (resultante del Ejercicio 1/2, ya modificada)
 precios_finales = [55.0, 132.0, 38.5, 88.0, 165.0]
-
 print("\n--- REPORTE DE INVENTARIO CON ENUMERATE ---")
-
-for i, p in enumerate(precios_finales):
-    # i → índice del elemento
-    # p → valor del elemento
-    print(f"El artículo en la posición {i} vale {p} USD.")
-
-
-
-# --------------------------------------------------------------------
-# TU CÓDIGO COMIENZA AQUÍ
-# --------------------------------------------------------------------
 
 # 1. Crea un bucle 'for' que use la función 'enumerate()' sobre 'precios_finales'.
 #    El bucle debe extraer DOS variables: el índice (i) y el precio (p).
@@ -40,6 +26,8 @@ for i, p in enumerate(precios_finales):
 # 2. Dentro del bucle, usa un 'print()' con una f-string para mostrar:
 #    "El artículo en la posición [i] vale [p] USD."
 
+for i, p in enumerate(precios_finales):
+    print(f"El artículo en la posición {i} vale {p} USD.")
 
 
 
