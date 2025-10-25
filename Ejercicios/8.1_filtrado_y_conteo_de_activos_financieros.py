@@ -28,20 +28,12 @@ cartera_inversion = [
 
 contador_alto_riesgo = 0
 
-# 1️⃣ Recorrer la lista cartera_inversion con un bucle for.
 for activo in cartera_inversion:
-    
-    # 2️⃣ Acceder directamente a la clave "riesgo".
     riesgo = activo["riesgo"]
-    
-    # 3️⃣ Verificar si el valor de riesgo es mayor que 7.
     if riesgo > 7:
-        
-        # 4️⃣ Si es así, incrementar el contador y mostrar mensaje.
         contador_alto_riesgo += 1
-        print(f"¡Activo de ALTO RIESGO encontrado: {activo['simbolo']}!")
+        print(f"¡Activo de ALTO RIESGO encontrado: {activo["simbolo"]}!")
         
-# 5️⃣ Al finalizar el bucle, mostrar el total.
 print(f"Hay {contador_alto_riesgo} activos de alto riesgo en la cartera.")
 
 
