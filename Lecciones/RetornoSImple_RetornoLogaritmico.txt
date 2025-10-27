@@ -1,0 +1,86 @@
+Lección 1 — Retorno simple vs Retorno logarítmico (Fundamentos)
+
+Objetivo
+Al final de esta lección deberías saber:
+- Qué son y cómo se calculan ambos tipos de retorno.
+- Por qué y cuándo usar uno u otro.
+- Cómo implementarlos en Pandas/NumPy correctamente.
+- Cómo interpretar resultados básicos (NaN, acumulados, anualización).
+- Practicar con ejercicios y soluciones.
+
+1 — Definición y fórmulas
+Retorno simple (porcentual) entre t−1 y t:
+R_t = (P_t − P_{t−1}) / P_{t−1} = (P_t / P_{t−1}) − 1
+Resultado: número (ej. 0.02 → 2%).
+
+Retorno logarítmico (continuo):
+r_t = ln(P_t / P_{t−1})
+Resultado: número (ej. 0.0198 → ≈1.98%).
+
+Relación aproximada (cuando cambios son pequeños):
+r_t ≈ R_t si R_t es pequeño (p. ej. < 5%)
+Más exactamente:
+1 + R_t = e^{r_t} ⇒ r_t = ln(1 + R_t)
+
+Ventaja práctica del log-return: son aditivos en el tiempo:
+ln(P_t / P_{t−2}) = ln(P_t / P_{t−1}) + ln(P_{t−1} / P_{t−2})
+
+2 — Por qué usar cada uno
+Retorno simple: intuitivo, fácil de interpretar. Útil en reporting y portfolios.
+Retorno logarítmico: matemáticamente conveniente (aditividad), preferido por quants.
+
+3 — Código completo y explicado (runnable)
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = {'Close': [100.0, 101.5, 99.8, 103.0, 102.1]}
+df = pd.DataFrame(data)
+
+df['Return_simple'] = df['Close'].pct_change()
+df['Return_log'] = np.log(df['Close'] / df['Close'].shift(1))
+df_filled = df.copy()
+df_filled['Return_simple'].fillna(0, inplace=True)
+df_filled['Return_log'].fillna(0, inplace=True)
+
+df['CumReturn_simple'] = (1 + df['Return_simple']).cumprod() - 1
+df['CumReturn_log'] = np.exp(df['Return_log'].cumsum()) - 1
+
+df['Diff_log_vs_simple'] = df['Return_log'] - np.log1p(df['Return_simple'])
+df['AbsDiff'] = df['Diff_log_vs_simple'].abs()
+
+print(df)
+
+plt.figure(figsize=(10,4))
+plt.plot(df['CumReturn_simple'], marker='o', label='CumReturn simple')
+plt.plot(df['CumReturn_log'], marker='x', label='CumReturn log (convertido)')
+plt.title('Retornos acumulados: simple vs log')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+4 — Manejo de NaNs
+- Ignorar primera fila (lo normal).
+- O rellenar con 0 si el algoritmo no acepta NaNs.
+
+5 — Anualizar retornos y volatilidad
+N = 252
+mean_daily = df['Return_log'].mean(skipna=True)
+vol_daily = df['Return_log'].std(skipna=True)
+mean_annual = mean_daily * N
+vol_annual = vol_daily * np.sqrt(N)
+
+6 — Ejercicios
+A. Calcula retornos simples y log para [50, 52, 51, 54, 53.5].
+B. Elimina NaN, calcula media y desviación estándar, anualiza.
+C. Comprueba que np.log(1 + R_t) ≈ r_t.
+
+7 — Consejos
+- No mezcles simples con logs sin normalizar.
+- Para reportes usa simples, para modelos usa logs.
+- np.log1p es más estable numéricamente.
+
+8 — Recursos recomendados
+Lectura: “Return and log returns” — libros de series temporales financieras.
+YouTube: “Retorno logarítmico vs retorno simple explicación”.
+Canales: Economipedia, Value School, Data Science for Finance.

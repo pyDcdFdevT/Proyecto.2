@@ -1,0 +1,134 @@
+# ==========================================================
+# 🧠 CHULETA COMPLETA DE PANDAS PARA FINANZAS Y QUANTS
+# ==========================================================
+# Explicada línea a línea para aprender no solo el “cómo” sino el “por qué”.
+# Usa este archivo como referencia para análisis financieros, trading y data science.
+
+# ==============================
+# 1️⃣ Importar librerías
+# ==============================
+import pandas as pd                   # Librería principal para análisis de datos (tablas, series temporales)
+import numpy as np                    # Para cálculos matemáticos y estadísticos
+import matplotlib.pyplot as plt       # Para crear gráficos
+import yfinance as yf                 # Permite descargar datos financieros históricos (acciones, índices, etc.)
+
+# ==============================
+# 2️⃣ Lectura y escritura de datos
+# ==============================
+# Importar datos desde archivos CSV o Excel, algo muy común en finanzas (precios, balances, etc.)
+df = pd.read_csv("archivo.csv", index_col="Date", parse_dates=True)      # index_col y parse_dates convierten fechas en índice temporal
+df = pd.read_excel("archivo.xlsx", sheet_name="Hoja1", index_col="Date") # Leer datos desde Excel
+df.to_csv("nuevo_archivo.csv")                                           # Guardar DataFrame a CSV
+df.to_excel("nuevo_archivo.xlsx")                                        # Guardar a Excel
+
+# ==============================
+# 3️⃣ Selección y filtrado
+# ==============================
+# Acceder a columnas, filas o aplicar filtros
+df['Close']                             # Selecciona una sola columna (Serie)
+df[['Open','Close']]                    # Selecciona múltiples columnas
+df.loc['2025-01-01']                    # Accede a fila por etiqueta (fecha específica)
+df.iloc[0]                              # Accede a la primera fila (posición 0)
+df[df['Close'] > 100]                   # Filtra las filas donde el precio de cierre > 100
+df[(df['Close']>100) & (df['Volume']>1000)]  # Filtros combinados con condiciones lógicas
+
+# ==============================
+# 4️⃣ Operaciones básicas y estadísticas
+# ==============================
+# Estas funciones permiten conocer el comportamiento general de una serie de datos financieros
+df['Close'].mean()        # Media → precio promedio
+df['Close'].std()         # Desviación estándar → mide la volatilidad
+df['Close'].var()         # Varianza → cuadrado de la volatilidad
+df['Close'].min()         # Precio mínimo
+df['Close'].max()         # Precio máximo
+df['Close'].median()      # Mediana → valor central
+df['Close'].quantile(0.25) # Primer cuartil → indica el 25% inferior de los datos
+df.describe()             # Resumen estadístico general
+
+# Retornos (ganancias/pérdidas)
+df['Return'] = df['Close'].pct_change()                      # Retorno simple (porcentaje de cambio entre días)
+df['LogReturn'] = np.log(df['Close'] / df['Close'].shift(1)) # Retorno logarítmico → mejor para análisis estadístico (se suman fácilmente)
+
+# ==============================
+# 5️⃣ Series temporales y resampling
+# ==============================
+# En finanzas los datos se agrupan por tiempo: días, semanas, meses, etc.
+df.index = pd.to_datetime(df.index)   # Asegura que el índice sea de tipo datetime
+df.resample('M').mean()               # Promedio mensual (útil para ver tendencias)
+df.resample('W').sum()                # Suma semanal (por ejemplo, volumen total)
+df['Close'].rolling(window=20).mean() # Media móvil de 20 días → suaviza los datos
+df['Close'].rolling(20).std()         # Desviación móvil de 20 días → mide volatilidad local
+
+# ==============================
+# 6️⃣ Retorno y riesgo (finanzas)
+# ==============================
+# Métricas básicas de performance y riesgo en un activo financiero
+df['Return'] = df['Close'].pct_change()
+df['Return'].mean()      # Retorno promedio → mide la rentabilidad esperada
+df['Return'].std()       # Volatilidad → mide el riesgo
+df['Return'].skew()      # Asimetría → mide si hay más caídas o subidas extremas
+df['Return'].kurt()      # Curtosis → mide la probabilidad de eventos extremos (colas gruesas)
+
+# Ratio de Sharpe → mide la rentabilidad ajustada por riesgo
+# Cuanto más alto, mejor (≈ superior a 1 es bueno, >2 excelente)
+sharpe = df['Return'].mean() / df['Return'].std() * np.sqrt(252)  # 252 días de mercado al año
+
+# Correlación y covarianza → útiles para diversificar carteras
+df[['AAPL','MSFT']].pct_change().corr()  # Relación lineal entre retornos
+df[['AAPL','MSFT']].pct_change().cov()   # Covarianza → mide co-movimiento
+
+# ==============================
+# 7️⃣ Manejo de datos
+# ==============================
+# Limpieza y preparación de datos antes del análisis
+df.isna().sum()                            # Detectar valores faltantes (NaN)
+df.dropna(inplace=True)                    # Eliminar filas con NaN
+df.fillna(method='ffill', inplace=True)    # Rellenar NaN hacia adelante (mantiene continuidad temporal)
+df.rename(columns={'Close':'PrecioCierre'}, inplace=True)  # Renombrar columnas
+df['High-Low'] = df['High'] - df['Low']   # Nueva columna → rango diario
+df.sort_values(by='Close', ascending=False) # Ordenar por precio de cierre
+
+# ==============================
+# 8️⃣ Operaciones avanzadas útiles para Quant
+# ==============================
+# Cálculos usados en trading algorítmico y modelado financiero
+df['CumReturn'] = (1 + df['Return']).cumprod() - 1  # Retorno acumulado total desde inicio
+df['LogClose'] = np.log(df['Close'])                # Precio en escala logarítmica → suaviza tendencias
+df['Normalized'] = df['Close'] / df['Close'].iloc[0] # Normaliza precios para comparar activos
+df['Volatility_20'] = df['Return'].rolling(20).apply(lambda x: np.std(x), raw=True)  # Volatilidad móvil de 20 días
+
+# ==============================
+# 9️⃣ Visualización rápida
+# ==============================
+# Gráficos básicos para interpretar los datos visualmente
+df['Close'].plot(figsize=(12,6), title="Precio de Cierre")
+plt.show()
+
+df['Return'].hist(bins=50, figsize=(10,5))  # Histograma de retornos → distribución del riesgo
+plt.title("Distribución de Retornos")
+plt.show()
+
+# Comparación entre precio real y media móvil
+df['Close'].plot(label='Precio Cierre', figsize=(12,6))
+df['Close'].rolling(20).mean().plot(label='Media Móvil 20 días')
+plt.legend()
+plt.title("Precio vs Media Móvil")
+plt.show()
+
+# ==============================
+# 🔟 Extra: Conectar con Yahoo Finance
+# ==============================
+# Para obtener datos reales de mercado sin pagar APIs
+tickers = ['AAPL','MSFT','GOOG']  # Lista de activos (Apple, Microsoft, Google)
+data = yf.download(tickers, start='2023-01-01', end='2025-01-01')['Close']  # Descarga precios diarios
+returns = data.pct_change()  # Calcula retornos diarios
+returns.corr()               # Matriz de correlación → cómo se mueven juntos los activos
+
+🧩 RESUMEN FINAL:
+Pandas = manipular datos
+NumPy = cálculos matemáticos
+Matplotlib = visualización
+yFinance = conexión con datos reales
+Retornos y volatilidad = corazón del análisis financiero
+Resampling y rolling windows = análisis temporal
+Sharpe, correlación, varianza = métricas de riesgo/rendimiento

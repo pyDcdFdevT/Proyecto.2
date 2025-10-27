@@ -20,3 +20,11 @@ volatilidad = df_precios["Variacion"].std() # <-- Accede a la columna 'Variacion
 # 3. Imprime los resultados
 print(f"Precio Promedio de Cierre: {promedio_cierre:.2f}")
 print(f"Volatilidad Diaria (Desv. Std.): {volatilidad:.2f}")
+
+def analizar_variacion(df):
+    promedio = df["Close"].mean()
+    volatilidad = df["Variacion"].std()
+    return {
+        "Promedio_Cierre": promedio,
+        "Volatilidad_Variacion": volatilidad
+    }
