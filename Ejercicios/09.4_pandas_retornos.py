@@ -13,8 +13,6 @@ df_precios = pd.DataFrame(data)
 # 1. CALCULA EL RETORNO LOGARÍTMICO
 df_precios['LogReturn'] = np.log(df_precios['Close'] / df_precios['Close'].shift(1))
 
-# TU CÓDIGO AQUÍ
-
 # 2. Imprime el resultado (solo las columnas relevantes)
 print("--- DATAFRAME CON RETORNOS LOGARÍTMICOS ---")
 print(df_precios[['Close', 'LogReturn']])
