@@ -10,25 +10,18 @@ df = pd.DataFrame(data)
 # 2. CALCULAR LOG-RETURN
 df['Return_log'] = np.log(df['Close'] / df['Close'].shift(1))
 
-# -----------------------------------------------------
-# TU CÓDIGO AQUÍ (Sección 7 y 5 de la lección)
-# -----------------------------------------------------
-
-# A. Elimina la fila NaN y copia el DF limpio a 'df_clean'.
-#    Pista: usa df.dropna(subset=['Return_log']).copy()
-
-df_clean = ...
+df_clean = df.dropna(subset=['Return_log']).copy()
 
 # B. Calcula la media diaria (mean_log) y la desviación estándar diaria (std_log)
 #    (Ambos sobre df_clean['Return_log'])
 
-mean_log = ...
-std_log = ...
+mean_log = df_clean['Return_log'].mean()
+std_log = df_clean['Return_log'].std()
 
 # C. Anualiza las métricas
 N_DIAS = 252
-mean_annual = ... # Multiplicación simple
-vol_annual = ...  # Multiplicación por la raíz de N_DIAS
+mean_annual = mean_log * N_DIAS
+vol_annual = std_log * np.sqrt(N_DIAS)
 
 # D. Imprime los resultados
 print(f"Media Diaria (Log): {mean_log:.6f}")
